@@ -2,18 +2,21 @@
 
 ## 安装
 
-安装教程：https://github.com/AliyunContainerService/k8s-for-docker-desktop/tree/v1.16.5
+安装教程
+
+https://github.com/AliyunContainerService/k8s-for-docker-desktop/tree/v1.16.5
 
 下载镜像
 ```
 git clone https://github.com/AliyunContainerService/k8s-for-docker-desktop.git
 ```
 
-切换分支。必须和本地安装 Docker Desktop的 Kubernetes 版本一致
+切换分支
+> 必须和本地安装 Docker Desktop的 Kubernetes 版本一致
 
 ![images](./images/k8s-version.jpg)
 
-```bash
+```java
 $ git checkout -b v1.16.5 origin/v1.16.5
 Switched to a new branch 'v1.16.5'
 Branch 'v1.16.5' set up to track remote branch 'v1.16.5' from 'origin'.
@@ -25,7 +28,7 @@ $ git branch
 * v1.16.5
 ```
 
-## 从阿里云镜像服务下载 Kubernetes 所需要的镜像
+## 下载 Kubernetes 所需要镜像
 
 在 Windows上，使用 PowerShell
 ```bash
@@ -44,23 +47,29 @@ registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.1
 ## 开启 Kubernetes
 
 等待 Kubernetes 开始运行
+
+> 这里可能比较慢，差不多10分钟左右吧
+
 ![images](./images/k8s-start.jpg)
+
+开启成功后，是运行中的
+![images](./images/k8s-start-success.jpg)
 
 ## 配置 Kubernetes
 
 开始配置
-```
+```php
 > kubectl config use-context docker-desktop
 ```
 
 验证 Kubernetes 集群状态
-```
+```php
 > kubectl cluster-info
 ```
 ![images](./images/k8s-cluster-info.jpg)
 
 获取 Kubernetes 集群节点
-```
+```php
 > kubectl get nodes
 ```
 ![images](./images/k8s-get-nodes.jpg)
@@ -68,29 +77,31 @@ registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.1
 ## 部署 Kubernetes 控制台
 
 部署 Kubernetes dashboard
-```
+```php
 > kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc5/aio/deploy/recommended.yaml
 ```
+
 或者
-```
+```php
 > kubectl create -f kubernetes-dashboard.yaml
 ```
 ![images](./images/k8s-dashboard.jpg)
 
 检查 kubernetes-dashboard 应用状态
-```
+```php
 > kubectl get pod -n kubernetes-dashboard
 ```
 ![images](./images/k8s-dashboard-pod.jpg)
 
 开启 API Server 访问代理
-```
+```php
 > kubectl proxy
 ```
 
-## 配置控制台访问令牌
+## 配置控制台
+
 对于Windows环境
-```
+```php
 $TOKEN=((kubectl -n kube-system describe secret default | Select-String "token:") -split " +")[1]
 kubectl config set-credentials docker-for-desktop --token="${TOKEN}"
 echo $TOKEN
@@ -105,7 +116,7 @@ echo $TOKEN
 ![images](./images/k8s-token-dis.jpg)
 
 或者选择 Kubeconfig 文件,路径如下：
-```
+```php
 Mac: $HOME/.kube/config
 Win: %UserProfile%\.kube\config
 ```
@@ -116,20 +127,18 @@ Win: %UserProfile%\.kube\config
 ## 配置 Ingress
 
 安装 Ingress
-```
+```php
 > kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/cloud/deploy.yaml
 ```
-![images](./images/k8s-dashboard-home.jpg)
-
-错误提示
-```
+错误提示！！！
+```php
 Unable to connect to the server: dial tcp: lookup raw.githubusercontent.com: getaddrinfow: The requested name is valid, but no data of the requested type was found.
 ```
-* 打开目录：C:/Windows/System32/drivers/etc/
-* 找到hosts文件，使用管理员模式打开记事本
-* 将hosts文件拖到管理员模式下的记事本中，然后在文件尾部添加以下文本：
+* 打开目录：`C:/Windows/System32/drivers/etc/`
+* 找到`hosts`文件，使用管理员模式打开记事本
+* 将`hosts`文件拖到管理员模式下的记事本中，然后在文件尾部添加以下文本：
 
-```
+```php
 # GitHub Start
 52.74.223.119 github.com
 192.30.253.119 gist.github.com
@@ -154,14 +163,13 @@ Unable to connect to the server: dial tcp: lookup raw.githubusercontent.com: get
 
 重新执行安装命令
 
-![images](./images/k8s-dashboard-home.jpg)
+![images](./images/k8s-ingress.jpg)
 
 验证
-```
+```php
 > kubectl get pods --all-namespaces -l app.kubernetes.io/name=ingress-nginx
 ```
 ![images](./images/k8s-ingress-nginx.jpg)
-
 
 ## 测试示例应用
 
@@ -170,7 +178,7 @@ Unable to connect to the server: dial tcp: lookup raw.githubusercontent.com: get
 进入案例目录：`E:\K8S\k8s-for-docker-desktop\sample>`
 ![images](./images/k8s-sample.jpg)
 
-```bash
+```php
 kubectl create -f sample/apple.yaml
 kubectl create -f sample/banana.yaml
 kubectl create -f sample/ingress.yaml
@@ -178,7 +186,7 @@ kubectl create -f sample/ingress.yaml
 ![images](./images/k8s-sample-create.jpg)
 
 测试示例应用
-```bash
+```php
 $ curl -kL http://localhost/apple
 apple
 
@@ -187,7 +195,7 @@ banana
 ```
 
 删除示例应用
-```bash
+```php
 kubectl delete -f sample/apple.yaml
 kubectl delete -f sample/banana.yaml
 kubectl delete -f sample/ingress.yaml
