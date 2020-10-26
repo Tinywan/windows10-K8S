@@ -41,9 +41,11 @@ registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.1
 ```
 
 :x: 错误解决
+
 ```bash
 .\load_images.ps1 : 无法加载文件 D:\k8s-for-docker-desktop\load_images.ps1，因为在此系统上禁止运行脚本。有关详细信息，请参阅 https:/go.microsoft.com/fwlink/?LinkID=135170 中的 about_Execution_Policies。
 ```
+
 上面报错的原因是系统禁止运行脚本，通过一下命令并输入Y开启此功能：
 ```
 set-executionpolicy remotesigned
@@ -137,9 +139,10 @@ Win: %UserProfile%\.kube\config
 ## 配置 Ingress
 
 安装 Ingress
-``````java
+```java
 > kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/cloud/deploy.yaml
 ```
+
 :x: 错误提示
 ```java
 Unable to connect to the server: dial tcp: lookup raw.githubusercontent.com: getaddrinfow: The requested name is valid, but no data of the requested type was found.
