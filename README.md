@@ -40,6 +40,16 @@ Status: Downloaded newer image for registry.cn-hangzhou.aliyuncs.com/google_cont
 registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.1
 ```
 
+:x: 错误解决
+```bash
+.\load_images.ps1 : 无法加载文件 D:\k8s-for-docker-desktop\load_images.ps1，因为在此系统上禁止运行脚本。有关详细信息，请参阅 https:/go.microsoft.com/fwlink/?LinkID=135170 中的 about_Execution_Policies。
+```
+上面报错的原因是系统禁止运行脚本，通过一下命令并输入Y开启此功能：
+```
+set-executionpolicy remotesigned
+```
+![images](./images/k8s-install.jpg)
+
 查看已经下载好的镜像
 
 ![images](./images/k8s-images.jpg)
@@ -63,13 +73,13 @@ registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.1
 ```
 
 验证 Kubernetes 集群状态
-```php
+```java
 > kubectl cluster-info
 ```
 ![images](./images/k8s-cluster-info.jpg)
 
 获取 Kubernetes 集群节点
-```php
+```java
 > kubectl get nodes
 ```
 ![images](./images/k8s-get-nodes.jpg)
@@ -94,14 +104,14 @@ registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.1
 ![images](./images/k8s-dashboard-pod.jpg)
 
 开启 API Server 访问代理
-```php
+```java
 > kubectl proxy
 ```
 
 ## 配置控制台
 
 对于Windows环境
-```php
+```java
 $TOKEN=((kubectl -n kube-system describe secret default | Select-String "token:") -split " +")[1]
 kubectl config set-credentials docker-for-desktop --token="${TOKEN}"
 echo $TOKEN
@@ -116,7 +126,7 @@ echo $TOKEN
 ![images](./images/k8s-token-dis.jpg)
 
 或者选择 Kubeconfig 文件,路径如下：
-```php
+```java
 Mac: $HOME/.kube/config
 Win: %UserProfile%\.kube\config
 ```
@@ -127,18 +137,18 @@ Win: %UserProfile%\.kube\config
 ## 配置 Ingress
 
 安装 Ingress
-```php
+``````java
 > kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/cloud/deploy.yaml
 ```
-错误提示！！！
-```php
+:x: 错误提示
+```java
 Unable to connect to the server: dial tcp: lookup raw.githubusercontent.com: getaddrinfow: The requested name is valid, but no data of the requested type was found.
 ```
 * 打开目录：`C:/Windows/System32/drivers/etc/`
 * 找到`hosts`文件，使用管理员模式打开记事本
 * 将`hosts`文件拖到管理员模式下的记事本中，然后在文件尾部添加以下文本：
 
-```php
+```java
 # GitHub Start
 52.74.223.119 github.com
 192.30.253.119 gist.github.com
